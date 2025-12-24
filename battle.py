@@ -44,7 +44,7 @@ class abt:#tortoise属性
                 print("-" * 35,"\n"+str(self.name_enemmy), "等级:" + str(ii), "HP:" + str(self.HP_enemmy),
                       "AP:" + str(self.AP_enemmy))  # 最大血量（用于显示），血量随着时间增加并且受到随机因子波动
 
-                print(str(self.name), "等级"+str(self.value), "HP：" + str(self.HP), "AP：" + str(self.AP), "MP：" + str(self.EEC))
+                print("“"+str(self.name)+"”", "等级"+str(self.value), "HP：" + str(self.HP), "AP：" + str(self.AP), "MP：" + str(self.EEC))
                 try:
                     mode = int(input("-" * 35+"\n 1：普通，2：技能，3：跑路\n 请输入数字:\n" + "-" * 35))
                     if mode in [1, 2, 3, 4]:
@@ -81,7 +81,7 @@ class abt:#tortoise属性
 
 
             elif mode==3:
-                print("跑路")
+
                 self.oe = 3
 
             else:

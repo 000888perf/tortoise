@@ -14,8 +14,8 @@ def random_1():
         state_1=3
     return random_number_1,state_1
 
-class tti:
     life = True
+class tti:
     def __init__(self):
         self.value=1#基础等级
         self.eat = 50#基础饱腹感
@@ -28,28 +28,29 @@ class tti:
         self.die =0#死亡判断
         self.death = 0#死亡选择
         self.life_or_death = 0 #战斗是否死亡判断
-
+        self.name = "000"
         print("/*创建乌龟实例")
     def do_eat(self,random_number):#吃饭函数
-        self.eat=min(self.eat+50+random_number,self.level*100)
+        self.eat=min(self.eat+int(5*self.level)+random_number,self.level*100)
         self.i -= 1
         print(" "*10+"(乌龟吃饭)"+" "*10)
     def do_water(self,random_number):#喝水函数
-        self.water=min(self.water+50+random_number,self.level*100)
+        self.water=min(self.water+int(5*self.level)+random_number,self.level*100)
         self.i -= 1
         print(" "*10+"(乌龟喝水)"+" "*10)
     def do_sleep(self,random_number):#睡觉函数
-        self.sleep=min(self.sleep+50+random_number,int(self.level*100))
+        self.sleep=min(self.sleep+int(5*self.level)+random_number,int(self.level*100))
         self.i -= 1
         print(" "*10+"(乌龟睡觉)"+" "*10)
     def do_day(self):#每日结算
-        self.eat-=20
-        self.water-=20
-        self.sleep-=20
+
+        self.eat-=int(2*self.ii)
+        self.water-=int(2*self.ii)
+        self.sleep-=int(2*self.ii)
         self.i = 3
         self.ii += 1
-        print("结束一天")
-        print("?",self.eat,self.water,self.sleep)
+        print("消耗"+str(int(2*self.ii))+"，结束一天")
+        #print("?",self.eat,self.water,self.sleep)显示实时数值
         self.die_1()
 
     def die_1(self,life_or_death=0):#判断死亡原因，死亡判断，如果死了抛出self.life = False
@@ -73,20 +74,26 @@ class tti:
             self.death=",".join(death_reasons) if death_reasons else "未知原因"
 
         if self.life == False:
-            print("乌龟死了，死于"+str(self.death))
+            print("乌龟“"+str(self.name)+"”死了，死于"+str(self.death))
 
 tortoise=tti()#每次重开都从新载入(懒还是算了)
 battle_1=battle.abt()#传入乌龟战斗类
 
 while True:
-
+    print("\n(随着天数增加，每日消耗会增加，升级增加回复量",
+          "\n 吃喝睡都会转化成属性",
+          "\n 乌龟任一吃喝睡数值小于0都会死",
+          "\n 战斗胜利获得2行动点)\n")
+    tortoise.name =  input("取个名字：    （默认000）")
+    if tortoise.name=="":
+        tortoise.name = "000"
     while tortoise.life:#死亡判断抛出假的时候，会跳出，然后进入从开判断
-        print("-"*35,"\n","    （乌龟任一数值小于0都会死）","\n",
+        print("-"*35,"\n",
               " 吃饭"+str(tortoise.eat)+"/"+str(tortoise.level*100),"喝水"+str(tortoise.water)+"/"+str(tortoise.level*100),"睡觉"+str(tortoise.sleep)+"/"+str(tortoise.level*100),"等级："+str(tortoise.level),"剩余次数"+str(tortoise.i),"天数"+str(tortoise.ii))
         while True:
 
             try:
-                mode=int(input(" 1：投喂，2：喝水，3：睡觉，4：结束这一天\n 5：战斗（吃喝睡都是战斗的属性） \n 请输入数字:\n"+"-"*35))
+                mode=int(input(" 1：投喂，2：喝水，3：睡觉，4：结束这一天\n 5：战斗   请输入数字:   名字：“"+str(tortoise.name)+"”\n"+"-"*35))
                 if mode in [1,2,3,4,5]:
                     break
                 else:
@@ -114,13 +121,15 @@ while True:
 
         elif mode==5:
             tortoise.ii=1#调试等级
-            tortoise.life_or_death,tortoise.eat,tortoise.water,tortoise.sleep=battle_1.fire(tortoise.eat,tortoise.water,tortoise.sleep,tortoise.ii,tortoise.level)#战斗(血量，攻击力，蓝量，天数，等级)
+            tortoise.i -=1
+            tortoise.life_or_death,tortoise.eat,tortoise.water,tortoise.sleep=battle_1.fire(tortoise.eat,tortoise.water,tortoise.sleep,tortoise.ii,tortoise.level,tortoise.name)#战斗(血量，攻击力，蓝量，天数，等级)
             if tortoise.life_or_death in [1,2]:
                 tortoise.level+=1
-                print("普通攻击击败敌人，等级+1")
+                tortoise.i+=2
+                print("普通攻击击败敌人，等级+1，行动值+2")
             elif tortoise.life_or_death in [3]:
-
                 print("艰难跑路")
+
             elif tortoise.life_or_death in [4]:
 
                 tortoise.life = False
@@ -154,7 +163,7 @@ while True:
         elif tortoise.die == 2:
             print("-" * 10 + "丢弃乌龟" + "-" * 10)
             day = round(((tortoise.ii + 1) / (356 * 25)) * 100,6)
-            print("乌龟活了" + str(tortoise.ii) + "天，度过了其他龟龟生命的" + str(day) + "%")
+            print("乌龟“"+tortoise.name+"”活了" + str(tortoise.ii) + "天，度过了其他龟龟生命的" + str(day) + "%")
 
             tortoise.die = 0
             break

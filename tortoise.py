@@ -24,21 +24,22 @@ class tti:
         self.life = True#死亡状态
         self.i = 3#行动数
         self.ii = 1#天数
-        self.day = 0#是否重开判断
+        self.level = 1 #乌龟等级
         self.die =0#死亡判断
         self.death = 0#死亡选择
+        self.life_or_death = 0 #战斗是否死亡判断
 
         print("/*创建乌龟实例")
     def do_eat(self,random_number):#吃饭函数
-        self.eat=min(self.eat+50+random_number,1000)
+        self.eat=min(self.eat+50+random_number,self.level*100)
         self.i -= 1
         print(" "*10+"(乌龟吃饭)"+" "*10)
     def do_water(self,random_number):#喝水函数
-        self.water=min(self.water+50+random_number,1000)
+        self.water=min(self.water+50+random_number,self.level*100)
         self.i -= 1
         print(" "*10+"(乌龟喝水)"+" "*10)
     def do_sleep(self,random_number):#睡觉函数
-        self.sleep=min(self.sleep+50+random_number,1000)
+        self.sleep=min(self.sleep+50+random_number,int(self.level*100))
         self.i -= 1
         print(" "*10+"(乌龟睡觉)"+" "*10)
     def do_day(self):#每日结算
@@ -51,10 +52,10 @@ class tti:
         print("?",self.eat,self.water,self.sleep)
         self.die_1()
 
-    def die_1(self):#判断死亡原因，死亡判断，如果死了抛出self.life = False
+    def die_1(self,life_or_death=0):#判断死亡原因，死亡判断，如果死了抛出self.life = False
         self.death="未知原因"
 
-        if self.eat<-1 or self.water<-1 or self.sleep<-1:#死亡判断
+        if self.eat<-1 or self.water<-1 or self.sleep<-1 or life_or_death==4:#死亡判断
             death_reasons = []#用列表的方式来获取死亡原因
             if self.eat < -1:
                 death_reasons.append("饥饿")
@@ -64,6 +65,9 @@ class tti:
                 self.life = False
             elif self.sleep < -1:
                 death_reasons.append("缺觉")
+                self.life = False
+            elif life_or_death == 4:
+                death_reasons.append("打不过")
                 self.life = False
 
             self.death=",".join(death_reasons) if death_reasons else "未知原因"
@@ -78,7 +82,7 @@ while True:
 
     while tortoise.life:#死亡判断抛出假的时候，会跳出，然后进入从开判断
         print("-"*35,"\n","    （乌龟任一数值小于0都会死）","\n",
-              " 吃饭"+str(tortoise.eat),"喝水"+str(tortoise.water),"睡觉"+str(tortoise.sleep),"剩余次数"+str(tortoise.i),"天数"+str(tortoise.ii))
+              " 吃饭"+str(tortoise.eat)+"/"+str(tortoise.level*100),"喝水"+str(tortoise.water)+"/"+str(tortoise.level*100),"睡觉"+str(tortoise.sleep)+"/"+str(tortoise.level*100),"等级："+str(tortoise.level),"剩余次数"+str(tortoise.i),"天数"+str(tortoise.ii))
         while True:
 
             try:
@@ -109,7 +113,18 @@ while True:
             tortoise.do_day()
 
         elif mode==5:
-            tortoise.value=battle_1.fire(5000,50,500,tortoise.ii)#战斗
+            tortoise.ii=1#调试等级
+            tortoise.life_or_death,tortoise.eat,tortoise.water,tortoise.sleep=battle_1.fire(tortoise.eat,tortoise.water,tortoise.sleep,tortoise.ii,tortoise.level)#战斗(血量，攻击力，蓝量，天数，等级)
+            if tortoise.life_or_death in [1,2]:
+                tortoise.level+=1
+                print("普通攻击击败敌人，等级+1")
+            elif tortoise.life_or_death in [3]:
+
+                print("艰难跑路")
+            elif tortoise.life_or_death in [4]:
+
+                tortoise.life = False
+                tortoise.die_1(tortoise.life_or_death)
 
 
 
@@ -138,8 +153,8 @@ while True:
 
         elif tortoise.die == 2:
             print("-" * 10 + "丢弃乌龟" + "-" * 10)
-            tortoise.day = ((tortoise.ii + 1) / (356 * 25)) * 100
-            print("乌龟活了" + str(tortoise.ii) + "天，度过了其他龟龟生命的" + str(tortoise.day) + "%")
+            day = round(((tortoise.ii + 1) / (356 * 25)) * 100,6)
+            print("乌龟活了" + str(tortoise.ii) + "天，度过了其他龟龟生命的" + str(day) + "%")
 
             tortoise.die = 0
             break

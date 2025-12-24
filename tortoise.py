@@ -14,7 +14,7 @@ def random_1():
         state_1=3
     return random_number_1,state_1
 
-    life = True
+
 class tti:
     def __init__(self):
         self.value=1#基础等级
@@ -31,17 +31,17 @@ class tti:
         self.name = "000"
         print("/*创建乌龟实例")
     def do_eat(self,random_number):#吃饭函数
-        self.eat=min(self.eat+int(5*self.level)+random_number,self.level*100)
+        self.eat=min((self.eat+int(10*self.level)+random_number),(99+int(self.level**2)))
         self.i -= 1
-        print(" "*10+"(乌龟吃饭)"+" "*10)
+        #print(" "*10+"(乌龟吃饭)"+" "*10)
     def do_water(self,random_number):#喝水函数
-        self.water=min(self.water+int(5*self.level)+random_number,self.level*100)
+        self.water=min((self.water+int(10*self.level)+random_number),(99+int(self.level**2)))
         self.i -= 1
-        print(" "*10+"(乌龟喝水)"+" "*10)
+        #print(" "*10+"(乌龟喝水)"+" "*10)
     def do_sleep(self,random_number):#睡觉函数
-        self.sleep=min(self.sleep+int(5*self.level)+random_number,int(self.level*100))
+        self.sleep=min((self.sleep+int(10*self.level)+random_number),(99+int(self.level**2)))
         self.i -= 1
-        print(" "*10+"(乌龟睡觉)"+" "*10)
+        #print(" "*10+"(乌龟睡觉)"+" "*10)
     def do_day(self):#每日结算
 
         self.eat-=int(2*self.ii)
@@ -49,7 +49,7 @@ class tti:
         self.sleep-=int(2*self.ii)
         self.i = 3
         self.ii += 1
-        print("消耗"+str(int(2*self.ii))+"，结束一天")
+        print("        （消耗"+str(int(2*self.ii))+"，结束一天）")
         #print("?",self.eat,self.water,self.sleep)显示实时数值
         self.die_1()
 
@@ -81,15 +81,14 @@ battle_1=battle.abt()#传入乌龟战斗类
 
 while True:
     print("\n(随着天数增加，每日消耗会增加，升级增加回复量",
-          "\n 吃喝睡都会转化成属性",
-          "\n 乌龟任一吃喝睡数值小于0都会死",
-          "\n 战斗胜利获得2行动点)\n")
+          "\n 吃喝睡都会转化成属性（吃为1.3倍血量，喝为1/4攻击力）,乌龟任一数值小于0就死",
+          "\n 战斗胜利获得2行动点，同一天的小怪越打越强，随着时间流逝也会增强)\n")
     tortoise.name =  input("取个名字：    （默认000）")
-    if tortoise.name=="":
+    if tortoise.name in [""," "," ","  "]:
         tortoise.name = "000"
     while tortoise.life:#死亡判断抛出假的时候，会跳出，然后进入从开判断
         print("-"*35,"\n",
-              " 吃饭"+str(tortoise.eat)+"/"+str(tortoise.level*100),"喝水"+str(tortoise.water)+"/"+str(tortoise.level*100),"睡觉"+str(tortoise.sleep)+"/"+str(tortoise.level*100),"等级："+str(tortoise.level),"剩余次数"+str(tortoise.i),"天数"+str(tortoise.ii))
+              " 吃饭"+str(int(tortoise.eat))+"/"+str(99+int(tortoise.level**2)),"喝水"+str(int(tortoise.water))+"/"+str(99+int(tortoise.level**2)),"睡觉"+str(int(tortoise.sleep))+"/"+str(99+int(tortoise.level**2)),"等级："+str(tortoise.level),"剩余次数"+str(tortoise.i),"天数"+str(tortoise.ii))
         while True:
 
             try:
@@ -106,29 +105,33 @@ while True:
         random_number = random_number
         if tortoise.i>0 and mode==1:
             tortoise.do_eat(random_number)
-            print(("  (吃的差，额外饱腹感"+str(random_number))+")" if state==1 else("  (吃的简简单单，额外饱腹感"+str(random_number)+")") if state==2 else "  (吃的不错，额外饱腹感"+str(random_number)+")")
+            print(("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number))+")" if state==1 else("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")") if state==2 else "    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
 
         elif tortoise.i>0 and mode==2:
             tortoise.do_water(random_number)
-            print(("  (喝的差，额外解渴度"+str(random_number))+")" if state==1 else ("  (喝的简简单单，额外解渴度"+str(random_number)+")") if state==2 else "  (喝的不错，额外解渴度"+str(random_number)+")")
+            print(("    （“"+str(tortoise.name)+"”喝的差，额外解渴度"+str(random_number))+")" if state==1 else ("    （“"+str(tortoise.name)+"”喝的简简单单，额外解渴度"+str(random_number)+")") if state==2 else "    （“"+str(tortoise.name)+"”喝的不错，额外解渴度"+str(random_number)+")")
 
         elif tortoise.i>0 and mode==3:
             tortoise.do_sleep(random_number)
-            print(("  (睡的差，额外解乏感"+str(random_number))+")" if state==1 else ("  (睡的简简单单，额外解乏感"+str(random_number)+")") if state==2 else "  (睡的不错，额外解乏感"+str(random_number)+")")
+            print(("    （“"+str(tortoise.name)+"”睡的差，额外解乏感"+str(random_number))+")" if state==1 else ("    （“"+str(tortoise.name)+"”睡的简简单单，额外解乏感"+str(random_number)+")") if state==2 else "    （“"+str(tortoise.name)+"”睡的不错，额外解乏感"+str(random_number)+")")
 
         elif mode==4:
             tortoise.do_day()
 
+
         elif mode==5:
-            tortoise.ii=1#调试等级
+            #tortoise.ii=1#调试等级
             tortoise.i -=1
             tortoise.life_or_death,tortoise.eat,tortoise.water,tortoise.sleep=battle_1.fire(tortoise.eat,tortoise.water,tortoise.sleep,tortoise.ii,tortoise.level,tortoise.name)#战斗(血量，攻击力，蓝量，天数，等级)
             if tortoise.life_or_death in [1,2]:
                 tortoise.level+=1
                 tortoise.i+=2
-                print("普通攻击击败敌人，等级+1，行动值+2")
+                print("（击败敌人，等级+1，行动值+2，恢复5%数值）")
+                tortoise.eat=int(tortoise.eat+(int(tortoise.level**2)*1.05))
+                tortoise.water=int(tortoise.water+(int(tortoise.level**2)*1.05))
+                tortoise.sleep=int(tortoise.sleep+(int(tortoise.level**2)*1.05))
             elif tortoise.life_or_death in [3]:
-                print("艰难跑路")
+                print("             （艰难跑路）")
 
             elif tortoise.life_or_death in [4]:
 
@@ -156,7 +159,7 @@ while True:
             tortoise.eat = 50
             tortoise.water = 50
             tortoise.sleep = 50
-            tortoise.ii = 0
+            tortoise.ii = 1
 
             tortoise.die = 0
 
@@ -164,7 +167,10 @@ while True:
             print("-" * 10 + "丢弃乌龟" + "-" * 10)
             day = round(((tortoise.ii + 1) / (356 * 25)) * 100,6)
             print("乌龟“"+tortoise.name+"”活了" + str(tortoise.ii) + "天，度过了其他龟龟生命的" + str(day) + "%")
-
+            tortoise.eat = 50
+            tortoise.water = 50
+            tortoise.sleep = 50
+            tortoise.ii = 1
             tortoise.die = 0
             break
 

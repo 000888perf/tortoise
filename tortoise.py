@@ -18,9 +18,9 @@ def random_1():
 class tti:
     def __init__(self):
         self.value=1#基础等级
-        self.eat = 50#基础饱腹感
-        self.water = 50#基础解渴度
-        self.sleep = 50#基础解乏度
+        self.eat = 20#基础饱腹感
+        self.water = 20#基础解渴度
+        self.sleep = 20#基础解乏度
         self.life = True#死亡状态
         self.i = 3#行动数
         self.ii = 1#天数
@@ -105,7 +105,11 @@ while True:
         random_number = random_number
         if tortoise.i>0 and mode==1:
             tortoise.do_eat(random_number)
-            print(("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number))+")" if state==1 else("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")") if state==2 else "    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
+            if state==1:
+                wordr=("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number))+")" )
+
+                wordr=("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")")
+                wordr=("    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
 
         elif tortoise.i>0 and mode==2:
             tortoise.do_water(random_number)
@@ -125,11 +129,12 @@ while True:
             tortoise.life_or_death,tortoise.eat,tortoise.water,tortoise.sleep=battle_1.fire(tortoise.eat,tortoise.water,tortoise.sleep,tortoise.ii,tortoise.level,tortoise.name)#战斗(血量，攻击力，蓝量，天数，等级)
             if tortoise.life_or_death in [1,2]:
                 tortoise.level+=1
-                tortoise.i+=2
-                print("（击败敌人，等级+1，行动值+2，恢复5%数值）")
-                tortoise.eat=int(tortoise.eat+(int(tortoise.level**2)*1.05))
-                tortoise.water=int(tortoise.water+(int(tortoise.level**2)*1.05))
-                tortoise.sleep=int(tortoise.sleep+(int(tortoise.level**2)*1.05))
+                tortoise.i+=1
+                tortoise.eat=min(int(tortoise.eat+(int(tortoise.level**2)*1.05)),(99+int(tortoise.level**2)))
+                tortoise.water=min(int(tortoise.water+(int(tortoise.level**2)*1.05)),(99+int(tortoise.level**2)))
+                tortoise.sleep=min(int(tortoise.sleep+(int(tortoise.level**2)*1.05)),(99+int(tortoise.level**2)))
+                print("（击败敌人，等级+1，行动值+1，恢复5%数值）")
+
             elif tortoise.life_or_death in [3]:
                 print("             （艰难跑路）")
 

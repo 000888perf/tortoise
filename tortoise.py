@@ -106,11 +106,18 @@ while True:
         if tortoise.i>0 and mode==1:
             tortoise.do_eat(random_number)
             if state==1:
+<<<<<<< HEAD
                 print("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number)+")" )
             elif state == 2:
                 print("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")")
             elif state == 3:
                 print("    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
+=======
+                wordr=("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number))+")" )
+
+                wordr=("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")")
+                wordr=("    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
+>>>>>>> 38b3b096cf946285faa3cc51eeac1f0786c64ec5
 
         elif tortoise.i>0 and mode==2:
             tortoise.do_water(random_number)

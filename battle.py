@@ -18,8 +18,8 @@ class abt:#tortoise属性
         self.ii=ii
         self.out+=1
         self.name_enemmy = name  # 角色名称
-        self.HP_enemmy = int(((self.out-0)*15) + 10 + (3 * self.ii) * random.uniform(0.9, 1 + (self.ii * 0.2)))  # 最大血量（用于显示），血量随着时间增加并且受到随机因子波动
-        self.AP_enemmy = int(((self.out*4)+ 2 + (1 * self.ii) * random.uniform(0.7, 1 + (self.ii * 0.2))))  # 当前攻击力（乌龟喷水），攻击力随着时间增加并且受到随机因子波动
+        self.HP_enemmy = int((((self.out-1)**3) + 35 + (20 * self.ii) * random.uniform(0.9, 1 + (self.ii * 0.2))))  # 最大血量（用于显示），血量随着时间增加并且受到随机因子波动
+        self.AP_enemmy = int(((self.out*4)+ 8 + (1 * self.ii) * random.uniform(0.7, 1 + (self.ii * 0.2))))  # 当前攻击力（乌龟喷水），攻击力随着时间增加并且受到随机因子波动
 
     def fole(self,eat,water,sleep,ii,value,name="主角"):#乌龟
         self.name = name  # 角色名称
@@ -35,13 +35,13 @@ class abt:#tortoise属性
         self.enemmy(ii,name_1)
         self.fole(eat,water,sleep,ii,value,name)
         self.oe = 0
-
+        print("（所有攻击为基础数值+等级+当前数值）")
 
 
         while self.oe==0:#所有跳出条件最终都指向修改 self.oe 的值（赋值为 1/2/3/4），使其不再等于 0；
 
             while True:#战斗小循环
-                print("所以攻击为基础数值+等级+当前数值")
+
                 print("-" * 35,"\n"+str(self.name_enemmy), "等级:" + str(ii), "血量:" + str(self.HP_enemmy),
                       "攻击力:" + str(self.AP_enemmy)+" 回合数："+str(self.out_1))  # 最大血量（用于显示），血量随着时间增加并且受到随机因子波动
 
@@ -89,7 +89,7 @@ class abt:#tortoise属性
                 self.oe = 3
 
             else:
-                print("            （精力不够）")
+                print("         （精力不够100）")
             if mode==1:#怪物反击
                 HP_3 = self.HP
                 self.HP=int(self.HP-self.AP_enemmy*random.uniform(0.6, 1+(self.ii*0.1)))

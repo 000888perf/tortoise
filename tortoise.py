@@ -106,18 +106,29 @@ while True:
         if tortoise.i>0 and mode==1:
             tortoise.do_eat(random_number)
             if state==1:
-                wordr=("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number))+")" )
-
-                wordr=("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")")
-                wordr=("    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
+                print("    （“"+str(tortoise.name)+"”吃的差，额外饱腹感"+str(random_number)+")" )
+            elif state == 2:
+                print("    （“"+str(tortoise.name)+"”吃的简简单单，额外饱腹感"+str(random_number)+")")
+            elif state == 3:
+                print("    （“"+str(tortoise.name)+"”吃的不错，额外饱腹感"+str(random_number)+")")
 
         elif tortoise.i>0 and mode==2:
             tortoise.do_water(random_number)
-            print(("    （“"+str(tortoise.name)+"”喝的差，额外解渴度"+str(random_number))+")" if state==1 else ("    （“"+str(tortoise.name)+"”喝的简简单单，额外解渴度"+str(random_number)+")") if state==2 else "    （“"+str(tortoise.name)+"”喝的不错，额外解渴度"+str(random_number)+")")
+            if stater ==1:
+                print("    （“"+str(tortoise.name)+"”喝的差，额外解渴度"+str(random_number)+")")
+            elif state ==2:
+                print("    （“"+str(tortoise.name)+"”喝的简简单单，额外解渴度"+str(random_number)+")")
+            elif state == 3:
+                print("    （“"+str(tortoise.name)+"”喝的不错，额外解渴度"+str(random_number)+")")
 
         elif tortoise.i>0 and mode==3:
             tortoise.do_sleep(random_number)
-            print(("    （“"+str(tortoise.name)+"”睡的差，额外解乏感"+str(random_number))+")" if state==1 else ("    （“"+str(tortoise.name)+"”睡的简简单单，额外解乏感"+str(random_number)+")") if state==2 else "    （“"+str(tortoise.name)+"”睡的不错，额外解乏感"+str(random_number)+")")
+            if state ==1:
+                print("    （“"+str(tortoise.name)+"”睡的差，额外解乏感"+str(random_number)+")")
+            elif state ==2:
+                print("    （“"+str(tortoise.name)+"”睡的简简单单，额外解乏感"+str(random_number)+")")
+            elif state == 3:
+                print("    （“"+str(tortoise.name)+"”睡的不错，额外解乏感"+str(random_number)+")")
 
         elif mode==4:
             tortoise.do_day()
